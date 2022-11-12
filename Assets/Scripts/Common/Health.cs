@@ -19,7 +19,6 @@ public class Health : MonoBehaviour
         }
     }
 
-
     public void GetDamage(float amount)
     {
         if (!_isAlive)
@@ -39,7 +38,6 @@ public class Health : MonoBehaviour
         _ragdoll.ActivateRagdoll();
         
     }
-
     public void Revive()
     {
 

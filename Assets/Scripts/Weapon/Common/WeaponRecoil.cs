@@ -1,10 +1,7 @@
 using UnityEngine;
-using Cinemachine;
-[RequireComponent(typeof(CinemachineImpulseSource))]
 public class WeaponRecoil : MonoBehaviour
 {
-    private CharacterRotation _characterAiming;//use for mouse input
-    private CinemachineImpulseSource _impulsSource;
+    private IRotate _pointOfView;
 
     private Animator _rigController;
     public const float s_unitMultiple = 10.0f;
@@ -29,7 +26,6 @@ public class WeaponRecoil : MonoBehaviour
     public void GenerateRecoil()
     {
         _currentTime = _duration;
-        _impulsSource?.GenerateImpulse(Camera.main.transform.forward);
         _horizontalRecoil = _recoilPattern[_currentRecoilIndex].x;
         _verticalRecoil = _recoilPattern[_currentRecoilIndex].y;
         _currentRecoilIndex = NextIndex(_currentRecoilIndex);
@@ -37,24 +33,18 @@ public class WeaponRecoil : MonoBehaviour
         _rigController.Play("Weapon_recoil",1,0.0f);
 
     }
-    public void Construct(CharacterRotation cameraRotation,Animator animator )
+    public void Construct(IRotate Rotator,Animator animator )
     {
         _rigController = animator;
-        _characterAiming = cameraRotation;
+        _pointOfView = Rotator;
     }
      private void Update()
     {
         if(_currentTime>0)
         {
-            _characterAiming.RotateCamera(_horizontalRecoil / s_unitMultiple * Time.deltaTime / _duration ,-(_verticalRecoil / s_unitMultiple * Time.deltaTime) / _duration);
-            //_cinemachineFreeLook.m_YAxis.Value -= (_verticalRecoil/s_unitMultipleY*Time.deltaTime)/_duration;
-            //_cinemachineFreeLook.m_XAxis.Value -= (_horizontalRecoil / s_unitMultipleX * Time.deltaTime) / _duration;
+            _pointOfView.Rotate(_horizontalRecoil / s_unitMultiple * Time.deltaTime / _duration ,-(_verticalRecoil / s_unitMultiple * Time.deltaTime) / _duration);
             _currentTime -= Time.deltaTime;
         }
      
-    }
-    private void Awake()
-    {
-        _impulsSource = GetComponent<CinemachineImpulseSource>();
     }
 }

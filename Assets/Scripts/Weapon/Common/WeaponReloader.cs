@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponReloader : MonoBehaviour
 {
     [SerializeField] private Animator _rigController;
-    [SerializeField] private ActiveWeapon _weaponHolder;
+    [SerializeField] private ActiveWeapon _weaponHolder;// why reloader knows about slots for weapons?too much knowledge for such a small task as reloading
     [SerializeField] private KeyCode _reloadKey;
     private bool _isReloading = false;
 
@@ -32,7 +32,8 @@ public class WeaponReloader : MonoBehaviour
 
         } while (_rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
 
-        _weaponHolder.GetActiveWeapon()?.Magazine.Reload();
+        _weaponHolder.GetActiveWeapon()?.Magazine.Reload();// strong reference
+        // better say Reload(RaycastWeapon weapon){weapon?.Reload()} or always know that raycast weapon has a Magazine(it can be or not)
         _isReloading = false;
     }
 }
