@@ -1,14 +1,14 @@
 using System.Collections.Generic;
+using UnityEngine.Animations;
 using UnityEngine;
 
 
 [RequireComponent(typeof(WeaponRecoil))]
 public class RaycastWeapon : MonoBehaviour
 {
-    public ActiveWeapon.WeaponSlot weaponSlot;
+    public WeaponSlots.WeaponSlot weaponSlot;
     [SerializeField] private FireType _fireType;
-
-    [SerializeField]private WeaponAnimationData AnimationData;// change from animation data to cpecific override animation controller
+    [SerializeField] private AnimatorOverrideController _weaponAnimationController;
     private bool _isFiring;
     private bool _shouldFire;
     [Header("Weapon stats")]
@@ -43,8 +43,6 @@ public class RaycastWeapon : MonoBehaviour
         _recoil.Construct(Rotator, animator);
     }
 
-
-    // сейчас так получается что закликивание кнопки выстрела ускоряет стрельбу что не приемлимо. надо исправить
     public void StartFiring()
     {
         if(!_isFiring)
@@ -60,11 +58,9 @@ public class RaycastWeapon : MonoBehaviour
         if (_fireType.CanStopManually)
             _shouldFire = false;
     }
-    public void ReplaceAnimationIn(AnimatorOverrideController overrideController)
+    public void ReplaceAnimationIn(Animator animator)
     {
-        overrideController["Equip_animation"] = AnimationData.Equip;
-        overrideController["Weapon_reload_empty"] = AnimationData.Reload;
-        overrideController["Weapon_recoil_empty"] = AnimationData.Recoil;
+        animator.runtimeAnimatorController = _weaponAnimationController;
     }
     private void UpdateFiring(float deltaTime)
     {

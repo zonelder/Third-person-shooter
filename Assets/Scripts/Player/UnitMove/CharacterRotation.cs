@@ -8,15 +8,7 @@ public class CharacterRotation : MonoBehaviour,IRotate
     [SerializeField] private Transform _cameraLookAt;
     [SerializeField] private Cinemachine.AxisState _xAxis;
     [SerializeField] private Cinemachine.AxisState _yAxis;
-    [Space(5)]
-    [SerializeField]private Animator _animator;
 
-    [SerializeField] private KeyCode _aimKey;
-    private void Update()
-    {
-        bool isAim = Input.GetKey(_aimKey);
-        _animator.SetBool("isAim", isAim);
-    }
     private void FixedUpdate()
     {
         _xAxis.Update(Time.fixedDeltaTime);

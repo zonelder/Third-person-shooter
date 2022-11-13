@@ -1742,6 +1742,60 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &2909957161750157113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2242025217239426049}
+  - component: {fileID: 1096234765624036747}
+  m_Layer: 5
+  m_Name: InputLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2242025217239426049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2909957161750157113}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8941100661842000181}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1096234765624036747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2909957161750157113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a068fd1a7b234f4e8971a5026edc40b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slots: {fileID: 3613169258648711391}
+  _reloader: {fileID: 3100000503170011228}
+  _characterLocomotion: {fileID: 9169578039862306800}
+  _cameraAnimator: {fileID: 162193273279863911}
+  _bodyAnimator: {fileID: 2182828318874767685}
+  _fireKey: 323
+  _hostelWeaponKey: 9
+  _primaryWeaponKey: 49
+  _SecondaryWeaponKey: 50
+  _aimKey: 324
+  _reloadKey: 114
 --- !u!1 &2953011133734352937
 GameObject:
   m_ObjectHideFlags: 0
@@ -4183,6 +4237,7 @@ Transform:
   m_Children:
   - {fileID: 2046559944384669226}
   - {fileID: 7299077138681203556}
+  - {fileID: 2242025217239426049}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -4198,7 +4253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a17569149ec495e48b4c20d5cdc46abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 2182828318874767685}
+  _bodyAnimator: {fileID: 2182828318874767685}
 --- !u!114 &9169578039862306800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4265,8 +4320,6 @@ MonoBehaviour:
       m_RecenteringTime: 0
       m_LegacyHeadingDefinition: 0
       m_LegacyVelocityFilterStrength: 0
-  _animator: {fileID: 162193273279863911}
-  _aimKey: 324
 --- !u!136 &4784332934749495382
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4293,21 +4346,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe885eeb01e85734b88a4cf89cdba892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _switchWeaponOnPickUp: 1
-  _characterAiming: {fileID: 9169578039862306798}
   _activeWeaponIndex: 0
   CrossHairTarget: {fileID: 0}
   _weaponSlots:
   - {fileID: 8999373246486970047}
   - {fileID: 2181194627984142}
-  _weaponLeftGrip: {fileID: 9169578040601909375}
-  _weaponRightGrip: {fileID: 9169578040847800729}
-  _handIK: {fileID: 9169578040876365010}
   _rigController: {fileID: 1855431982701462435}
-  _fireKey: 323
-  _hostelWeaponKey: 9
-  _primaryWeaponKey: 49
-  _SecondaryWeaponKey: 50
+  _switchWeaponOnPickUp: 1
 --- !u!114 &3100000503170011228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4321,8 +4366,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigController: {fileID: 1855431982701462435}
-  _weaponHolder: {fileID: 3613169258648711391}
-  _reloadKey: 114
 --- !u!54 &2580839237277053542
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ragdoll : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _bodyAnimator;
     private Rigidbody[] _rigids;
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class Ragdoll : MonoBehaviour
             rigidBody.isKinematic = false;
  
         }
-        _animator.enabled = false;
+        _bodyAnimator.enabled = false;
     }
 
     public void DeactivateRagdoll()
@@ -27,6 +27,6 @@ public class Ragdoll : MonoBehaviour
         {
             rigidBody.isKinematic = true;
         }
-        _animator.enabled = true;
+        _bodyAnimator.enabled = true;
     }
 }

@@ -57,7 +57,7 @@ namespace Common.Infrastructure
  
             rigBuilder.Build();
             CrosshairTarget target = mainCamera.GetComponentInChildren<CrosshairTarget>();
-            Character.gameObject.GetComponent<ActiveWeapon>().CrossHairTarget = target.transform;
+            Character.gameObject.GetComponent<WeaponSlots>().CrossHairTarget = target.transform;
 
         }
 

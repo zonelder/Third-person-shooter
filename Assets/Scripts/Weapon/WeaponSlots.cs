@@ -2,41 +2,44 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(IRotate))]
-public class ActiveWeapon : MonoBehaviour
+public class WeaponSlots : MonoBehaviour
 {
-    public enum WeaponSlot 
+    public enum WeaponSlot
     {
-        Primary=0,
-        Secondary=1
+        Primary = 0,
+        Secondary = 1
     }
-    private IRotate  _pointOfView;
+    private IRotate _pointOfView;
     [SerializeField] private int _activeWeaponIndex;
     public Transform CrossHairTarget;
-    private RaycastWeapon []_equipedWeapons = new RaycastWeapon[2];
+    private RaycastWeapon[] _equipedWeapons = new RaycastWeapon[2];
     [SerializeField] private Transform[] _weaponSlots;
     [SerializeField] private Animator _rigController;
-    private AnimatorOverrideController _rigOverrideController;
     [Space(10)]
     [SerializeField] private bool _switchWeaponOnPickUp;
-    [SerializeField] private KeyCode _fireKey;
-    [SerializeField] private KeyCode _hostelWeaponKey;
-    [SerializeField] private KeyCode _primaryWeaponKey;
-    [SerializeField] private KeyCode _SecondaryWeaponKey;
-
     private bool _isHostelWeapon;
+
+    public bool IsHostelWeapon
+    {
+        get => _isHostelWeapon;
+        set
+        {
+            _rigController.SetBool("HostelWeapon", value);
+            _isHostelWeapon = value;
+        }
+    }
+
     public RaycastWeapon GetActiveWeapon()
     {
         return GetWeaponAt(_activeWeaponIndex);
     }
 
-    [ExecuteInEditMode]
     private void Awake()
     {
         _pointOfView = GetComponent<IRotate>();
     }
     private void Start()
     {
-        _rigOverrideController = _rigController.runtimeAnimatorController as AnimatorOverrideController;
         _isHostelWeapon = _rigController.GetBool("HostelWeapon");
         var existingWeapon = GetComponentInChildren<RaycastWeapon>();
         if(existingWeapon)
@@ -45,39 +48,6 @@ public class ActiveWeapon : MonoBehaviour
         }
 
     }
-    private  void Update()
-    {
-        var weapon = GetWeaponAt(_activeWeaponIndex);
-        if(weapon)
-        { 
-            if(!_isHostelWeapon)
-            {
-                if (Input.GetKeyDown(_fireKey))
-                {
-                    weapon.StartFiring();
-                }
-                if (Input.GetKeyUp(_fireKey))
-                {
-                    weapon.StopFiring();
-                }
-            }
-
-            if(Input.GetKeyDown(_hostelWeaponKey))
-            {
-                _rigController.SetBool("HostelWeapon", !_isHostelWeapon);
-                _isHostelWeapon = !_isHostelWeapon;
-            }
-        }
-        if(Input.GetKeyDown(_primaryWeaponKey))
-        {
-            SetActiveWeapon(WeaponSlot.Primary);
-        }
-        if(Input.GetKeyDown(_SecondaryWeaponKey))
-        {
-            SetActiveWeapon(WeaponSlot.Secondary);
-        }
-    }
-
     public void Equip(RaycastWeapon newWeapon)
     {
         int weaponSlotIndex = (int)newWeapon.weaponSlot;
@@ -116,7 +86,6 @@ public class ActiveWeapon : MonoBehaviour
     {
         if (index < 0 || index >= _equipedWeapons.Length)
         {
-            Debug.Log("try to accses invalid weapon");
             return null;
         }
         return _equipedWeapons[index];
@@ -128,8 +97,8 @@ public class ActiveWeapon : MonoBehaviour
         var weapon = GetWeaponAt(index);
         if(weapon && !_isHostelWeapon)
         {
-            _rigController.SetBool("HostelWeapon", true);
-            _isHostelWeapon = true;
+
+            IsHostelWeapon = true;
             yield return new WaitForEndOfFrame();
             do
             {
@@ -146,11 +115,10 @@ public class ActiveWeapon : MonoBehaviour
         {
             _activeWeaponIndex = index;
             //<all animator stuff>
-            _rigController.SetBool("HostelWeapon", false);
-            _isHostelWeapon = false;
+            IsHostelWeapon = false;
             _rigController.SetBool("WeaponEquiped", true);
 
-            _equipedWeapons[_activeWeaponIndex].ReplaceAnimationIn(_rigOverrideController);
+            _equipedWeapons[_activeWeaponIndex].ReplaceAnimationIn(_rigController);
             //</all animator stuff>
 
             do

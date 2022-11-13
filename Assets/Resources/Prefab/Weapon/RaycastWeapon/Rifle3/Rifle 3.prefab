@@ -19204,6 +19204,8 @@ MonoBehaviour:
     _fireType: 1
     _burstCount: 3
   AnimationData: {fileID: 11400000, guid: d71e95b376e9dbd4299104fcca39d07c, type: 2}
+  _weaponAnimationController: {fileID: 22100000, guid: 7a4002d049f84ad42b98acbbe8ecc308,
+    type: 2}
   _currentBulletType: {fileID: 11400000, guid: 7e5a38bb05ca30a4a9a6869ab60c90df, type: 2}
   _fireRate: 10
   _bulletSpeed: 400

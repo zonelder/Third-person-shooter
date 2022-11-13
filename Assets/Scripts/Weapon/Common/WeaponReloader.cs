@@ -1,30 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponReloader : MonoBehaviour
 {
     [SerializeField] private Animator _rigController;
-    [SerializeField] private ActiveWeapon _weaponHolder;// why reloader knows about slots for weapons?too much knowledge for such a small task as reloading
-    [SerializeField] private KeyCode _reloadKey;
     private bool _isReloading = false;
 
-
-    private void Update()
+    public void TryReload(RaycastWeapon reloadingWeapon)
     {
-        if(Input.GetKeyDown(_reloadKey))
+        if (!_isReloading)
         {
-            if(!_isReloading)
-            {
-                _rigController.SetTrigger("Reload");
-                _isReloading = true;
-                StartCoroutine(WaitTillEndReloadAnimation());
-            }
- 
+            _rigController.SetTrigger("Reload");
+            _isReloading = true;
+            StartCoroutine(WaitTillEndReloadAnimation(reloadingWeapon));
         }
     }
-
-    private IEnumerator WaitTillEndReloadAnimation()
+    private IEnumerator WaitTillEndReloadAnimation(RaycastWeapon weapon)
     {
         do
         {
@@ -32,7 +23,7 @@ public class WeaponReloader : MonoBehaviour
 
         } while (_rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
 
-        _weaponHolder.GetActiveWeapon()?.Magazine.Reload();// strong reference
+        weapon?.Magazine.Reload();
         // better say Reload(RaycastWeapon weapon){weapon?.Reload()} or always know that raycast weapon has a Magazine(it can be or not)
         _isReloading = false;
     }
