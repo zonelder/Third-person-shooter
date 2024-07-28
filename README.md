@@ -11,6 +11,5 @@ basic shooter includes  all mechanics, central to the genre. Project use
 - Enemy Spawner
 - Weapon pickups
 
-## For illustration
-loading .gif may take a while
+## For illustration(loading .gif may take a while)
 ![gameplaydemo](https://user-images.githubusercontent.com/45139960/201923303-2764b0c9-cc90-411b-b83d-34ffdd98b170.gif)
